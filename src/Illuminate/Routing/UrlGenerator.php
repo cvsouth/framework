@@ -318,7 +318,7 @@ class UrlGenerator implements UrlGeneratorContract
      *
      * @throws \InvalidArgumentException
      */
-    public function signedRoute($name, $parameters = [], $expiration = null, $absolute = true)
+    public function signedRoute($name, $parameters = [], $expiration = null, $absolute = true, $site = null)
     {
         $parameters = Arr::wrap($parameters);
 
@@ -337,8 +337,8 @@ class UrlGenerator implements UrlGeneratorContract
         $key = call_user_func($this->keyResolver);
 
         return $this->route($name, $parameters + [
-            'signature' => hash_hmac('sha256', $this->route($name, $parameters, $absolute), $key),
-        ], $absolute);
+            'signature' => hash_hmac('sha256', $this->route($name, $parameters, $absolute, $site), $key),
+        ], $absolute, $site);
     }
 
     /**
@@ -350,9 +350,9 @@ class UrlGenerator implements UrlGeneratorContract
      * @param  bool  $absolute
      * @return string
      */
-    public function temporarySignedRoute($name, $expiration, $parameters = [], $absolute = true)
+    public function temporarySignedRoute($name, $expiration, $parameters = [], $absolute = true, $site = null)
     {
-        return $this->signedRoute($name, $parameters, $expiration, $absolute);
+        return $this->signedRoute($name, $parameters, $expiration, $absolute, $site);
     }
 
     /**
@@ -411,8 +411,11 @@ class UrlGenerator implements UrlGeneratorContract
      *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
      */
-    public function route($name, $parameters = [], $absolute = true)
+    public function route($name, $parameters = [], $absolute = true, $site = null, $secure = null)
     {
+        if(is_dir(base_path('vendor/cvsouth/application')))
+            return site_route($name, $parameters, $absolute, $site, $secure);
+
         if (! is_null($route = $this->routes->getByName($name))) {
             return $this->toRoute($route, $parameters, $absolute);
         }

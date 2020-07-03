@@ -763,9 +763,9 @@ if (! function_exists('route')) {
      * @param  bool  $absolute
      * @return string
      */
-    function route($name, $parameters = [], $absolute = true)
+    function route($name, $parameters = [], $absolute = true, $site = null, $secure = null)
     {
-        return app('url')->route($name, $parameters, $absolute);
+        return app('url')->route($name, $parameters, $absolute, $site, $secure);
     }
 }
 

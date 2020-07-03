@@ -56,7 +56,7 @@ class VerifyEmail extends Notification
      * @param  mixed  $notifiable
      * @return string
      */
-    protected function verificationUrl($notifiable)
+    protected function verificationUrl($notifiable, $site = null)
     {
         return URL::temporarySignedRoute(
             'verification.verify',
@@ -64,7 +64,9 @@ class VerifyEmail extends Notification
             [
                 'id' => $notifiable->getKey(),
                 'hash' => sha1($notifiable->getEmailForVerification()),
-            ]
+            ],
+            true,
+            $site
         );
     }
 

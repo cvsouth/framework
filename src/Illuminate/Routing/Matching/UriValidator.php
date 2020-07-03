@@ -18,6 +18,8 @@ class UriValidator implements ValidatorInterface
     {
         $path = rtrim($request->getPathInfo(), '/') ?: '/';
 
+        if(function_exists('site_id') && !empty(site_id()) && empty($route->getDomain())) return false;
+
         return preg_match($route->getCompiled()->getRegex(), rawurldecode($path));
     }
 }

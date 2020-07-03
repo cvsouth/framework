@@ -71,8 +71,13 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function loadCachedRoutes()
     {
-        $this->app->booted(function () {
-            require $this->app->getCachedRoutesPath();
+        $this->app->booted(function ()
+        {
+            if(function_exists('cached_routes') && has_cached_routes())
+
+                app('router')->setCompiledRoutes(cached_routes());
+
+            else require $this->app->getCachedRoutesPath();
         });
     }
 
@@ -86,6 +91,7 @@ class RouteServiceProvider extends ServiceProvider
         if (method_exists($this, 'map')) {
             $this->app->call([$this, 'map']);
         }
+        if(function_exists('load_site_routes')) load_site_routes(app('router'));
     }
 
     /**
