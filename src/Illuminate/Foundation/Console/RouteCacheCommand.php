@@ -50,7 +50,7 @@ class RouteCacheCommand extends Command
      */
     public function handle()
     {
-        $this->call('route:clear');
+        if(empty($GLOBALS['recache-routes'])) $this->call('route:clear');
 
         $routes = $this->getFreshApplicationRoutes();
 
@@ -62,7 +62,9 @@ class RouteCacheCommand extends Command
             $route->prepareForSerialization();
         }
 
-        $this->files->put(
+        app('cache')->put('routes', $routes->compile());
+
+        if(empty($GLOBALS['recache-routes'])) $this->files->put(
             $this->laravel->getCachedRoutesPath(), $this->buildRouteCacheFile($routes)
         );
 
