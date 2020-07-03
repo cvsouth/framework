@@ -138,11 +138,12 @@ class Router implements BindingRegistrar, RegistrarContract
      *
      * @param  string  $uri
      * @param  array|string|callable|null  $action
+     * @param  array|null  $meta
      * @return \Illuminate\Routing\Route
      */
-    public function get($uri, $action = null)
+    public function get($uri, $action = null, $meta = null)
     {
-        return $this->addRoute(['GET', 'HEAD'], $uri, $action);
+        return $this->addRoute(['GET', 'HEAD'], $uri, $action, $meta);
     }
 
     /**
@@ -150,11 +151,12 @@ class Router implements BindingRegistrar, RegistrarContract
      *
      * @param  string  $uri
      * @param  array|string|callable|null  $action
+     * @param  array|null  $meta
      * @return \Illuminate\Routing\Route
      */
-    public function post($uri, $action = null)
+    public function post($uri, $action = null, $meta = null)
     {
-        return $this->addRoute('POST', $uri, $action);
+        return $this->addRoute('POST', $uri, $action, $meta);
     }
 
     /**
@@ -162,11 +164,12 @@ class Router implements BindingRegistrar, RegistrarContract
      *
      * @param  string  $uri
      * @param  array|string|callable|null  $action
+     * @param  array|null  $meta
      * @return \Illuminate\Routing\Route
      */
-    public function put($uri, $action = null)
+    public function put($uri, $action = null, $meta = null)
     {
-        return $this->addRoute('PUT', $uri, $action);
+        return $this->addRoute('PUT', $uri, $action, $meta);
     }
 
     /**
@@ -174,11 +177,12 @@ class Router implements BindingRegistrar, RegistrarContract
      *
      * @param  string  $uri
      * @param  array|string|callable|null  $action
+     * @param  array|null  $meta
      * @return \Illuminate\Routing\Route
      */
-    public function patch($uri, $action = null)
+    public function patch($uri, $action = null, $meta = null)
     {
-        return $this->addRoute('PATCH', $uri, $action);
+        return $this->addRoute('PATCH', $uri, $action, $meta);
     }
 
     /**
@@ -186,11 +190,12 @@ class Router implements BindingRegistrar, RegistrarContract
      *
      * @param  string  $uri
      * @param  array|string|callable|null  $action
+     * @param  array|null  $meta
      * @return \Illuminate\Routing\Route
      */
-    public function delete($uri, $action = null)
+    public function delete($uri, $action = null, $meta = null)
     {
-        return $this->addRoute('DELETE', $uri, $action);
+        return $this->addRoute('DELETE', $uri, $action, $meta);
     }
 
     /**
@@ -198,11 +203,12 @@ class Router implements BindingRegistrar, RegistrarContract
      *
      * @param  string  $uri
      * @param  array|string|callable|null  $action
+     * @param  array|null  $meta
      * @return \Illuminate\Routing\Route
      */
-    public function options($uri, $action = null)
+    public function options($uri, $action = null, $meta = null)
     {
-        return $this->addRoute('OPTIONS', $uri, $action);
+        return $this->addRoute('OPTIONS', $uri, $action, $meta);
     }
 
     /**
@@ -210,25 +216,27 @@ class Router implements BindingRegistrar, RegistrarContract
      *
      * @param  string  $uri
      * @param  array|string|callable|null  $action
+     * @param  array|null  $meta
      * @return \Illuminate\Routing\Route
      */
-    public function any($uri, $action = null)
+    public function any($uri, $action = null, $meta = null)
     {
-        return $this->addRoute(self::$verbs, $uri, $action);
+        return $this->addRoute(self::$verbs, $uri, $action, $meta);
     }
 
     /**
      * Register a new Fallback route with the router.
      *
      * @param  array|string|callable|null  $action
+     * @param  array|null  $meta
      * @return \Illuminate\Routing\Route
      */
-    public function fallback($action)
+    public function fallback($action, $meta = null)
     {
         $placeholder = 'fallbackPlaceholder';
 
         return $this->addRoute(
-            'GET', "{{$placeholder}}", $action
+            'GET', "{{$placeholder}}", $action, $meta
         )->where($placeholder, '.*')->fallback();
     }
 
@@ -267,11 +275,12 @@ class Router implements BindingRegistrar, RegistrarContract
      * @param  array  $data
      * @param  int|array  $status
      * @param  array  $headers
+     * @param  array|null  $meta
      * @return \Illuminate\Routing\Route
      */
-    public function view($uri, $view, $data = [], $status = 200, array $headers = [])
+    public function view($uri, $view, $data = [], $status = 200, array $headers = [], $meta = null)
     {
-        return $this->match(['GET', 'HEAD'], $uri, '\Illuminate\Routing\ViewController')
+        return $this->match(['GET', 'HEAD'], $uri, '\Illuminate\Routing\ViewController', $meta)
                 ->setDefaults([
                     'view' => $view,
                     'data' => $data,
@@ -286,11 +295,12 @@ class Router implements BindingRegistrar, RegistrarContract
      * @param  array|string  $methods
      * @param  string  $uri
      * @param  array|string|callable|null  $action
+     * @param  array|null  $meta
      * @return \Illuminate\Routing\Route
      */
-    public function match($methods, $uri, $action = null)
+    public function match($methods, $uri, $action = null, $meta = null)
     {
-        return $this->addRoute(array_map('strtoupper', (array) $methods), $uri, $action);
+        return $this->addRoute(array_map('strtoupper', (array) $methods), $uri, $action, $meta);
     }
 
     /**
@@ -446,11 +456,12 @@ class Router implements BindingRegistrar, RegistrarContract
      * @param  array|string  $methods
      * @param  string  $uri
      * @param  array|string|callable|null  $action
+     * @param  array|null  $meta
      * @return \Illuminate\Routing\Route
      */
-    public function addRoute($methods, $uri, $action)
+    public function addRoute($methods, $uri, $action, $meta = null)
     {
-        return $this->routes->add($this->createRoute($methods, $uri, $action));
+        return $this->routes->add($this->createRoute($methods, $uri, $action, $meta));
     }
 
     /**
@@ -459,9 +470,10 @@ class Router implements BindingRegistrar, RegistrarContract
      * @param  array|string  $methods
      * @param  string  $uri
      * @param  mixed  $action
+     * @param  array|null  $meta
      * @return \Illuminate\Routing\Route
      */
-    protected function createRoute($methods, $uri, $action)
+    protected function createRoute($methods, $uri, $action, $meta = null)
     {
         // If the route is routing to a controller we will parse the route action into
         // an acceptable array format before registering it and creating this route
@@ -471,7 +483,7 @@ class Router implements BindingRegistrar, RegistrarContract
         }
 
         $route = $this->newRoute(
-            $methods, $this->prefix($uri), $action
+            $methods, $this->prefix($uri), $action, $meta
         );
 
         // If we have groups that need to be merged, we will merge them now after this
@@ -548,11 +560,12 @@ class Router implements BindingRegistrar, RegistrarContract
      * @param  array|string  $methods
      * @param  string  $uri
      * @param  mixed  $action
+     * @param  array|null  $meta
      * @return \Illuminate\Routing\Route
      */
-    public function newRoute($methods, $uri, $action)
+    public function newRoute($methods, $uri, $action, $meta = null)
     {
-        return (new Route($methods, $uri, $action))
+        return (new Route($methods, $uri, $action, $meta))
                     ->setRouter($this)
                     ->setContainer($this->container);
     }

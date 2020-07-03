@@ -45,6 +45,13 @@ class Route
     public $action;
 
     /**
+     * The route meta data.
+     *
+     * @var array
+     */
+    public $meta;
+
+    /**
      * Indicates whether the route is a fallback route.
      *
      * @var bool
@@ -155,13 +162,15 @@ class Route
      * @param  array|string  $methods
      * @param  string  $uri
      * @param  \Closure|array  $action
+     * @param  array|null  $meta
      * @return void
      */
-    public function __construct($methods, $uri, $action)
+    public function __construct($methods, $uri, $action, $meta = null)
     {
         $this->uri = $uri;
         $this->methods = (array) $methods;
         $this->action = Arr::except($this->parseAction($action), ['prefix']);
+        $this->meta = $meta;
 
         if (in_array('GET', $this->methods) && ! in_array('HEAD', $this->methods)) {
             $this->methods[] = 'HEAD';
@@ -928,6 +937,31 @@ class Route
         }
 
         return $this;
+    }
+
+    /**
+     * Get the meta data for the route.
+     *
+     * @return mixed
+     */
+    public function getMeta()
+    {
+        return $this->meta;
+    }
+
+    /**
+     * Get specific meta data for the route.
+     *
+     * @param  string|mixed  $key
+     * @return mixed
+     */
+    public function meta($key)
+    {
+        if(empty($this->meta)) {
+            return null;
+        }
+
+        return !empty($this->meta[$key]) ? $this->meta[$key] : null;
     }
 
     /**
