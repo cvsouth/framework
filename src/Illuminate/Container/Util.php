@@ -3,6 +3,7 @@
 namespace Illuminate\Container;
 
 use Closure;
+use ReflectionNamedType;
 
 class Util
 {

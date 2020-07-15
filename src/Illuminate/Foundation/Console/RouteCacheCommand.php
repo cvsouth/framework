@@ -67,6 +67,7 @@ class RouteCacheCommand extends Command
         if(empty($GLOBALS['recache-routes'])) $this->files->put(
             $this->laravel->getCachedRoutesPath(), $this->buildRouteCacheFile($routes)
         );
+
         $this->info('Routes cached successfully!');
     }
 

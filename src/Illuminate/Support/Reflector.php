@@ -3,6 +3,7 @@
 namespace Illuminate\Support;
 
 use ReflectionClass;
+use ReflectionNamedType;
 
 class Reflector
 {
