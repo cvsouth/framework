@@ -8,7 +8,6 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Concerns\BuildsQueries;
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Query\Grammars\Grammar;
 use Illuminate\Database\Query\Processors\Processor;
 use Illuminate\Pagination\Paginator;
@@ -243,7 +242,7 @@ class Builder
     /**
      * Add a subselect expression to the query.
      *
-     * @param  \Closure|$this|string  $query
+     * @param  \Closure|\Illuminate\Database\Query\Builder|string  $query
      * @param  string  $as
      * @return $this
      *
@@ -338,7 +337,7 @@ class Builder
      */
     protected function parseSub($query)
     {
-        if ($query instanceof self || $query instanceof EloquentBuilder || $query instanceof Relation) {
+        if ($query instanceof self || $query instanceof EloquentBuilder) {
             return [$query->toSql(), $query->getBindings()];
         } elseif (is_string($query)) {
             return [$query, []];
@@ -3087,7 +3086,6 @@ class Builder
     {
         return $value instanceof self ||
                $value instanceof EloquentBuilder ||
-               $value instanceof Relation ||
                $value instanceof Closure;
     }
 

@@ -3,7 +3,6 @@
 namespace Illuminate\Support;
 
 use ReflectionClass;
-use ReflectionNamedType;
 
 class Reflector
 {
@@ -17,17 +16,7 @@ class Reflector
     {
         $type = $parameter->getType();
 
-        if (! $type instanceof ReflectionNamedType || $type->isBuiltin()) {
-            return;
-        }
-
-        $name = $type->getName();
-
-        if ($name === 'self') {
-            return $parameter->getDeclaringClass()->getName();
-        }
-
-        return $name;
+        return ($type && ! $type->isBuiltin()) ? $type->getName() : null;
     }
 
     /**

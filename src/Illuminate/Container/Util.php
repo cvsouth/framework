@@ -3,7 +3,6 @@
 namespace Illuminate\Container;
 
 use Closure;
-use ReflectionNamedType;
 
 class Util
 {
@@ -49,16 +48,6 @@ class Util
     {
         $type = $parameter->getType();
 
-        if (! $type instanceof ReflectionNamedType || $type->isBuiltin()) {
-            return;
-        }
-
-        $name = $type->getName();
-
-        if ($name === 'self') {
-            return $parameter->getDeclaringClass()->getName();
-        }
-
-        return $name;
+        return ($type && ! $type->isBuiltin()) ? $type->getName() : null;
     }
 }

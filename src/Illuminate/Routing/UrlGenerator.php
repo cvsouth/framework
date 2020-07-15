@@ -320,7 +320,7 @@ class UrlGenerator implements UrlGeneratorContract
      */
     public function signedRoute($name, $parameters = [], $expiration = null, $absolute = true, $site = null)
     {
-        $parameters = Arr::wrap($parameters);
+        $parameters = $this->formatParameters($parameters);
 
         if (array_key_exists('signature', $parameters)) {
             throw new InvalidArgumentException(

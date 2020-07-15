@@ -1073,7 +1073,7 @@ class Collection implements ArrayAccess, Enumerable
     /**
      * Sort through each item with a callback.
      *
-     * @param  callable|int|null  $callback
+     * @param  callable|null  $callback
      * @return static
      */
     public function sort($callback = null)

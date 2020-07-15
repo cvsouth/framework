@@ -4,6 +4,7 @@ namespace Illuminate\Foundation\Support\Providers;
 
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Traits\ForwardsCalls;
 
