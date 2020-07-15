@@ -941,7 +941,9 @@ class Route
      */
     public function meta($key)
     {
-        if(empty($this->meta)) return null;
+        if(empty($this->meta)) {
+            return null;
+        }
 
         return !empty($this->meta[$key]) ? $this->meta[$key] : null;
     }

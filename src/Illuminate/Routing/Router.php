@@ -228,14 +228,15 @@ class Router implements BindingRegistrar, RegistrarContract
      * Register a new Fallback route with the router.
      *
      * @param  array|string|callable|null  $action
+     * @param  array|null  $meta
      * @return \Illuminate\Routing\Route
      */
-    public function fallback($action)
+    public function fallback($action, $meta = null)
     {
         $placeholder = 'fallbackPlaceholder';
 
         return $this->addRoute(
-            'GET', "{{$placeholder}}", $action
+            'GET', "{{$placeholder}}", $action, $meta
         )->where($placeholder, '.*')->fallback();
     }
 
@@ -272,11 +273,12 @@ class Router implements BindingRegistrar, RegistrarContract
      * @param  string  $uri
      * @param  string  $view
      * @param  array  $data
+     * @param  array|null  $meta
      * @return \Illuminate\Routing\Route
      */
-    public function view($uri, $view, $data = [])
+    public function view($uri, $view, $data = [], $meta = null)
     {
-        return $this->match(['GET', 'HEAD'], $uri, '\Illuminate\Routing\ViewController')
+        return $this->match(['GET', 'HEAD'], $uri, '\Illuminate\Routing\ViewController', $meta)
                 ->defaults('view', $view)
                 ->defaults('data', $data);
     }
@@ -287,11 +289,12 @@ class Router implements BindingRegistrar, RegistrarContract
      * @param  array|string  $methods
      * @param  string  $uri
      * @param  array|string|callable|null  $action
+     * @param  array|null  $meta
      * @return \Illuminate\Routing\Route
      */
-    public function match($methods, $uri, $action = null)
+    public function match($methods, $uri, $action = null, $meta = null)
     {
-        return $this->addRoute(array_map('strtoupper', (array) $methods), $uri, $action);
+        return $this->addRoute(array_map('strtoupper', (array) $methods), $uri, $action, $meta);
     }
 
     /**
