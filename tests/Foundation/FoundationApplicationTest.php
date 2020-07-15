@@ -87,18 +87,6 @@ class FoundationApplicationTest extends TestCase
         $this->assertArrayHasKey($class, $app->getLoadedProviders());
     }
 
-    public function testServiceProvidersCouldBeLoaded()
-    {
-        $provider = m::mock(ServiceProvider::class);
-        $class = get_class($provider);
-        $provider->shouldReceive('register')->once();
-        $app = new Application;
-        $app->register($provider);
-
-        $this->assertTrue($app->providerIsLoaded($class));
-        $this->assertFalse($app->providerIsLoaded(ApplicationBasicServiceProviderStub::class));
-    }
-
     public function testDeferredServicesMarkedAsBound()
     {
         $app = new Application;

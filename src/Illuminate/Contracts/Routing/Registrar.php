@@ -9,60 +9,54 @@ interface Registrar
      *
      * @param  string  $uri
      * @param  array|string|callable  $action
-     * @param  array|null  $meta
      * @return \Illuminate\Routing\Route
      */
-    public function get($uri, $action, $meta = null);
+    public function get($uri, $action);
 
     /**
      * Register a new POST route with the router.
      *
      * @param  string  $uri
      * @param  array|string|callable  $action
-     * @param  array|null  $meta
      * @return \Illuminate\Routing\Route
      */
-    public function post($uri, $action, $meta = null);
+    public function post($uri, $action);
 
     /**
      * Register a new PUT route with the router.
      *
      * @param  string  $uri
      * @param  array|string|callable  $action
-     * @param  array|null  $meta
      * @return \Illuminate\Routing\Route
      */
-    public function put($uri, $action, $meta = null);
+    public function put($uri, $action);
 
     /**
      * Register a new DELETE route with the router.
      *
      * @param  string  $uri
      * @param  array|string|callable  $action
-     * @param  array|null  $meta
      * @return \Illuminate\Routing\Route
      */
-    public function delete($uri, $action, $meta = null);
+    public function delete($uri, $action);
 
     /**
      * Register a new PATCH route with the router.
      *
      * @param  string  $uri
      * @param  array|string|callable  $action
-     * @param  array|null  $meta
      * @return \Illuminate\Routing\Route
      */
-    public function patch($uri, $action, $meta = null);
+    public function patch($uri, $action);
 
     /**
      * Register a new OPTIONS route with the router.
      *
      * @param  string  $uri
      * @param  array|string|callable  $action
-     * @param  array|null  $meta
      * @return \Illuminate\Routing\Route
      */
-    public function options($uri, $action, $meta = null);
+    public function options($uri, $action);
 
     /**
      * Register a new route with the given verbs.
@@ -70,10 +64,9 @@ interface Registrar
      * @param  array|string  $methods
      * @param  string  $uri
      * @param  array|string|callable  $action
-     * @param  array|null  $meta
      * @return \Illuminate\Routing\Route
      */
-    public function match($methods, $uri, $action, $meta = null);
+    public function match($methods, $uri, $action);
 
     /**
      * Route a resource to a controller.

@@ -138,9 +138,6 @@
 ### Added
 - Added missing `symfony/mime` suggest ([#33067](https://github.com/laravel/framework/pull/33067))
 
-### Fixed
-- Fixed `Illuminate\Database\Eloquent\Relations\MorphToMany::getCurrentlyAttachedPivots()` ([110b129](https://github.com/laravel/framework/commit/110b129531df172f03bf163f561c71123fac6296))
-
 
 ## [v7.14.0 (2020-06-02)](https://github.com/laravel/framework/compare/v7.13.0...v7.14.0)
 

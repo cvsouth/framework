@@ -44,7 +44,7 @@ class DatabaseStore implements Store
     protected $lockTable;
 
     /**
-     * An array representation of the lock lottery odds.
+     * A array representation of the lock lottery odds.
      *
      * @var array
      */
